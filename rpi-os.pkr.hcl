@@ -45,7 +45,7 @@ build {
   }
 
   post-processor "checksum" {
-    checksum_types      = ["md5", "sha1", "sha512"]
+    checksum_types      = ["md5", "sha1", "sha256"]
     keep_input_artifact = true
   }
 
