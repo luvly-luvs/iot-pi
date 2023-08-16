@@ -5,6 +5,7 @@ MNT_PATH="/mnt/dietpi" && export MNT_PATH
 BOOT_PATH="$MNT_PATH/boot" && export BOOT_PATH
 IMAGE_NAME="DietPi_RPi-ARMv8-Bullseye" && export IMAGE_NAME
 IMAGE_URL="https://dietpi.com/downloads/images/$IMAGE_NAME.7z" && export IMAGE_URL
+LOOP=$(sudo losetup -f) && export LOOP
 
 OS_CONFIG=$1
 DIET_CONFIG=$2
@@ -13,7 +14,7 @@ POSTBOOT_SCRIPT=$3
 function cleanup {
   sudo umount -f "$BOOT_PATH"
   sudo umount -f "$MNT_PATH"
-  sudo losetup -D
+  sudo losetup -d "$LOOP"
   sudo rm -rf "$MNT_PATH"
 }
 trap cleanup EXIT
@@ -26,9 +27,9 @@ wget -q "$IMAGE_URL" -O "$IMAGE_NAME.7z"
 echo ">> Mounting DietPi image to current machine <<"
 [ -d "$MNT_PATH" ] && sudo rm -rf "$MNT_PATH"
 sudo mkdir -p "$MNT_PATH"
-sudo losetup -Pr /dev/loop0 "./$IMAGE_NAME.img"
-sudo mount /dev/loop0p2 "$MNT_PATH"
-sudo mount /dev/loop0p1 "$BOOT_PATH"
+sudo losetup -Pr "$LOOP" "./$IMAGE_NAME.img"
+sudo mount "${LOOP}0p2" "$MNT_PATH"
+sudo mount "${LOOP}0p1" "$BOOT_PATH"
 
 echo ">> Replacing OS and DietPi configurations <<"
 pushd "$BOOT_PATH"
