@@ -4,8 +4,9 @@ set -xeou pipefail
 echo ">> Pre-Run Script <<"
 
 sudo apt-get update -y
-xargs sudo apt-get -y -f install <packages
-xargs sudo apt-get -y -f install --no-install-recommends <packages_nr
+sudo apt-get install -y -f git chromium-browser policykit-1 rfkill alsa-utils alsa-oss libportaudio2 g++ make apt-file libasound2 libasound-dev libxtst-dev libpng++-dev unclutter xdotool
+sudo apt-get install -y -f --no-install-recommends xorg xserver-xorg-core xserver-xorg-video-fbdev xinit lxde gvfs-backends gvfs-fuse gnome-keyring
+sudo apt-get autoremove -y
 
 touch /boot/ssh
 touch "$HOME/.xinitrc"
