@@ -27,7 +27,7 @@ STAGE_LIST="stage0 stage1 stage2"
 EOF
 
 touch ./stage2/SKIP_NOOBS
-ln -s ../config ./config
+ln -nfs ../config ./config
 
 chmod +x ./build.sh
 sudo ./build.sh
