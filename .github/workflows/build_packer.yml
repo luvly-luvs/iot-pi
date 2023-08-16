@@ -18,3 +18,10 @@ jobs:
         run: |
           sudo chmod +x ./.github/scripts/build-packer.sh
           sudo ./.github/scripts/build-packer.sh
+          find . -maxdepth 4 -type f -name "*.img" -exec basename {} \;
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: packer-${{ github.run_id }}
+          path: ./*.img
