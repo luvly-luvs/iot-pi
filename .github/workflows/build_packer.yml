@@ -24,4 +24,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: packer-${{ github.run_id }}
-          path: ./*.img
+          path: |
+            ./*.zip
+            !*.img

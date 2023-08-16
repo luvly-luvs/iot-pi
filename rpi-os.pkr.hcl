@@ -39,4 +39,17 @@ build {
   provisioner "shell" {
     script = "./rpi-os-run.sh"
   }
+
+  post-processor "manifest" {
+    keep_input_artifact = true
+  }
+
+  post-processor "checksum" {
+    checksum_types      = ["md5", "sha1", "sha512"]
+    keep_input_artifact = true
+  }
+
+  post-processor "compress" {
+    output = "${local.image_name}.zip"
+  }
 }
