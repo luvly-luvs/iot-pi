@@ -30,3 +30,4 @@ touch ./stage2/SKIP_NOOBS
 
 sudo chmod +x ./build.sh
 sudo ./build.sh
+zip -rj "$img_key.zip" "./deploy/*.img"
