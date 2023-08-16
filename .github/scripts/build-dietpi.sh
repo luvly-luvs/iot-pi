@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -xeou pipefail
 
-MNT_PATH="/mnt/dietpi" && export MNT_PATH
+MNT_PATH="gh-mnt/dietpi" && export MNT_PATH
 BOOT_PATH="$MNT_PATH/boot" && export BOOT_PATH
 IMAGE_NAME="DietPi_RPi-ARMv8-Bullseye" && export IMAGE_NAME
 IMAGE_URL="https://dietpi.com/downloads/images/$IMAGE_NAME.7z" && export IMAGE_URL
