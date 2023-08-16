@@ -3,5 +3,3 @@
 set -xeou pipefail
 
 echo ">> Run Script <<"
-
-systemctl enable ssh
