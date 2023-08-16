@@ -14,7 +14,7 @@ IFS=" " read -ra sha_out <<<"$(shasum -a 256 "$base_img.img")"
 echo "sha256:${sha_out[0]}"
 
 cat >"rpi-os.pkrvars.hcl" <<-EOF
-source_iso_url = "$base_img"
+source_iso_url = "$base_img.img"
 source_iso_checksum = "${sha_out[0]}"
 EOF
 
