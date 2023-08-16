@@ -25,6 +25,6 @@ EOF
 )
 
 sudo packer init .
-sudo packer validate .
+sudo packer validate -var-file="rpi-os.pkrvars.hcl" .
 sudo packer build -var-file="rpi-os.pkrvars.hcl" .
 rm "$base_img.img"
