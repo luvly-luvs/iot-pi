@@ -21,4 +21,5 @@ EOF
   exit 1
 )
 
+sudo packer init .
 sudo packer build -var-file="rpi-os.pkrvars.hcl" .
