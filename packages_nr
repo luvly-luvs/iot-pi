@@ -1,0 +1,8 @@
+xorg
+xserver-xorg-core
+xserver-xorg-video-fbdev
+xinit
+lxde
+gvfs-backends
+gvfs-fuse
+gnome-keyring

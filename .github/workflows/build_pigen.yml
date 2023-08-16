@@ -16,12 +16,6 @@ name: Build Image with Pi-Gen
 concurrency:
   group: pi-gen
   cancel-in-progress: true
-env:
-  compression: ${{ github.event.inputs.compression }}
-  compression_lvl: ${{ github.event.inputs.compression == 'none' && 0 || github.event.inputs.compression_level }}
-  img_dir: ${{ github.workspace }}
-  image_ext: ${{ github.event.inputs.compression == 'none' && '.img' || github.event.inputs.compression }}
-  img_key: arm64_${{ github.run_id }}
 jobs:
   build:
     name: Build
@@ -36,20 +30,11 @@ jobs:
       - name: Checkout pi-gen
         uses: actions/checkout@v3
         with:
-          path: ${{ env.img_dir }}/pi-gen
+          path: pi-gen
           repository: RPi-Distro/pi-gen
           ref: arm64
 
-      - name: Install Build Dependencies
-        working-directory: ${{ env.img_dir }}
-        run: |
-          sudo apt-get update
-          xargs sudo apt-get install -f -y <depends
-
       - name: Set Build Configuration
-        working-directory: ${{ env.img_dir }}
         run: |
-          sed -i "s/^IMG_NAME=.*$/IMG_NAME=\"${{ env.img_key }}\"/g" ./config
-          sed -i "s/^DEPLOY_COMPRESSION=.*$/DEPLOY_COMPRESSION=\"${{ env.compression }}\"/g" ./config
-          sed -i "s/^COMPRESSION_LEVEL=.*$/COMPRESSION_LEVEL=\"${{ env.compression_lvl }}\"/g" ./config
-          cat ./config
+          sudo chmod +x ./.github/scripts/build-pigen.sh
+          ./.github/scripts/build-pigen.sh

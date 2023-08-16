@@ -1,0 +1,23 @@
+on: [push, workflow_dispatch]
+name: Build Image with Packer
+concurrency:
+  group: packer
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Packer
+        uses: hashicorp-contrib/setup-packer@v2
+
+      - name: Build
+        run: |
+          sudo chmod +x ./.github/scripts/build-packer.sh
+          ./.github/scripts/build-packer.sh
