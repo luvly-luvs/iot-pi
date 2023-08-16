@@ -8,14 +8,14 @@ img_key=${3:-iot-pi}
 sudo apt-get update -y
 xargs sudo apt-get install -f -y <../depends
 
-cat >config <<-EOF
+cat >>config <<-EOF
 # -- pigen config --
 IMG_NAME="$img_key"
 RELEASE="bullseye"
 DEPLOY_COMPRESSION="$comp_type"
 COMPRESSION_LEVEL="$comp_level"
 LOCALE_DEFAULT="en_US.UTF-8"
-TARGET_HOSTNAME="LittleBirdTE-XXX"
+TARGET_HOSTNAME="LittleBirdTE-001"
 KEYBOARD_KEYMAP="us"
 TIMEZONE_DEFAULT="America/Phoenix"
 FIRST_USER_NAME="pi"
@@ -27,7 +27,6 @@ STAGE_LIST="stage0 stage1 stage2"
 EOF
 
 touch ./stage2/SKIP_NOOBS
-ln -nfs ../config ./config
 
-chmod +x ./build.sh
+sudo chmod +x ./build.sh
 sudo ./build.sh

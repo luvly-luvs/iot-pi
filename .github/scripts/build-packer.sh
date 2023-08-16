@@ -12,8 +12,8 @@ wget -q "https://dietpi.com/downloads/images/$base_img" -O "$base_img"
 IFS=" " read -ra sha_out <<<"$(shasum -a 256 "$base_img")"
 
 cat >"./rpi-os.pkrvars.hcl" <<-EOF
-iso_url = "$base_img"
-iso_checksum = "${sha_out[0]}"
+source_iso_url = "$base_img"
+source_iso_checksum = "${sha_out[0]}"
 EOF
 
 ! command -v packer && (
