@@ -33,6 +33,8 @@ sudo mount "${LOOP}p1" "$BOOT_PATH"
 
 echo ">> Replacing OS and DietPi configurations <<"
 pushd "$BOOT_PATH"
+#cp "$BOOT_PATH/cmdline.txt" "./cmdline.txt"
+chmod +w .
 sed -i 's/console=tty[[:digit:]]\+/console=tty3/' cmdline.txt
 sed -i 's/console=tty3.*$/& loglevel=3 quiet logo.nologo vt.global_cursor_default=0/' cmdline.txt
 cp -f "$OS_CONFIG" config.txt
