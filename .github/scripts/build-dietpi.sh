@@ -32,13 +32,12 @@ sudo mount "${LOOP}p2" "$MNT_PATH"
 sudo mount "${LOOP}p1" "$BOOT_PATH"
 
 echo ">> Replacing OS and DietPi configurations <<"
-pushd "$BOOT_PATH"
-#cp "$BOOT_PATH/cmdline.txt" "./cmdline.txt"
+cp -f "$BOOT_PATH/cmdline.txt" cmdline.txt
 sudo sed -i 's/console=tty[[:digit:]]\+/console=tty3/' cmdline.txt
 sudo sed -i 's/console=tty3.*$/& loglevel=3 quiet logo.nologo vt.global_cursor_default=0/' cmdline.txt
-sudo cp -f "$OS_CONFIG" config.txt
-sudo cp -f "$DIET_CONFIG" cdietpi.txt
-popd
+cp -f cmdline.txt "$BOOT_PATH/cmdline.txt"
+sudo cp -f "$OS_CONFIG" "$BOOT_PATH/config.txt"
+sudo cp -f "$DIET_CONFIG" "$BOOT_PATH/dietpi.txt"
 
 echo ">> Creating custom scripts <<"
 sudo cp -f "$POSTBOOT_SCRIPT" "$BOOT_PATH/Automation_Custom_Script.sh"
