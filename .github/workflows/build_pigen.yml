@@ -1,0 +1,55 @@
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      compression:
+        type: choice
+        description: Compression Type (all level 6)
+        default: zip
+        options: [none, zip, gz, xz]
+      compression_level:
+        type: choice
+        description: Compression Level (0-9)
+        default: "6"
+        options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+name: Build Image with Pi-Gen
+concurrency:
+  group: pi-gen
+  cancel-in-progress: true
+env:
+  compression: ${{ github.event.inputs.compression }}
+  compression_lvl: ${{ github.event.inputs.compression == 'none' && 0 || github.event.inputs.compression_level }}
+  img_dir: ${{ github.workspace }}
+  image_ext: ${{ github.event.inputs.compression == 'none' && '.img' || github.event.inputs.compression }}
+  img_key: arm64_${{ github.run_id }}
+jobs:
+  build:
+    name: Build
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout this
+        uses: actions/checkout@v3
+
+      - name: Checkout pi-gen
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.img_dir }}/pi-gen
+          repository: RPi-Distro/pi-gen
+          ref: arm64
+
+      - name: Install Build Dependencies
+        working-directory: ${{ env.img_dir }}
+        run: |
+          sudo apt-get update
+          xargs sudo apt-get install -f -y <depends
+
+      - name: Set Build Configuration
+        working-directory: ${{ env.img_dir }}
+        run: |
+          sed -i "s/^IMG_NAME=.*$/IMG_NAME=\"${{ env.img_key }}\"/g" ./config
+          sed -i "s/^DEPLOY_COMPRESSION=.*$/DEPLOY_COMPRESSION=\"${{ env.compression }}\"/g" ./config
+          sed -i "s/^COMPRESSION_LEVEL=.*$/COMPRESSION_LEVEL=\"${{ env.compression_lvl }}\"/g" ./config
+          cat ./config
