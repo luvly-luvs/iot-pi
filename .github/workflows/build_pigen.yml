@@ -31,8 +31,14 @@ jobs:
           repository: RPi-Distro/pi-gen
           ref: arm64
 
-      - name: Set Build Configuration
+      - name: Build
         working-directory: pi-gen
         run: |
           sudo chmod +x ../.github/scripts/build-pigen.sh
           sudo ../.github/scripts/build-pigen.sh
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: pigen-${{ github.run_id }}
+          path: pi-gen/deploy

@@ -20,15 +20,17 @@ locals {
 }
 
 source "arm-image" "pi" {
-  iso_url           = var.source_iso_url
-  iso_checksum      = var.source_iso_checksum
-  target_image_size = 3221225472
+  iso_url              = var.source_iso_url
+  iso_checksum         = var.source_iso_checksum
+  iso_target_extension = "img"
+  image_type           = "raspberry"
+  output_filename      = local.image_name
+  target_image_size    = 3221225472
 }
 
 build {
-  name            = "base"
-  sources         = ["source.arm-image.pi"]
-  output_filename = local.image_name
+  name    = "base"
+  sources = ["source.arm-image.pi"]
 
   provisioner "shell" {
     script = "./rpi-prerun.sh"
