@@ -28,35 +28,30 @@ echo ">> Mounting DietPi image to current machine <<"
 [ -d "$MNT_PATH" ] && sudo rm -rf "$MNT_PATH"
 sudo mkdir -p "$MNT_PATH"
 sudo losetup -Pr "$LOOP" "./$IMAGE_NAME.img"
-sudo mount "${LOOP}p2" "$MNT_PATH"
-sudo mount "${LOOP}p1" "$BOOT_PATH"
+sudo mount -t ext4 "${LOOP}p2" "$MNT_PATH"
+sudo mount -t ext4 "${LOOP}p1" "$BOOT_PATH"
 
 echo ">> Replacing OS and DietPi configurations <<"
 pushd "$BOOT_PATH"
 #cp "$BOOT_PATH/cmdline.txt" "./cmdline.txt"
-chmod +w .
-sed -i 's/console=tty[[:digit:]]\+/console=tty3/' cmdline.txt
-sed -i 's/console=tty3.*$/& loglevel=3 quiet logo.nologo vt.global_cursor_default=0/' cmdline.txt
-cp -f "$OS_CONFIG" config.txt
-cp -f "$DIET_CONFIG" cdietpi.txt
+sudo sed -i 's/console=tty[[:digit:]]\+/console=tty3/' cmdline.txt
+sudo sed -i 's/console=tty3.*$/& loglevel=3 quiet logo.nologo vt.global_cursor_default=0/' cmdline.txt
+sudo cp -f "$OS_CONFIG" config.txt
+sudo cp -f "$DIET_CONFIG" cdietpi.txt
 popd
 
 echo ">> Creating custom scripts <<"
-cp -f "$POSTBOOT_SCRIPT" "$BOOT_PATH/Automation_Custom_Script.sh"
-chmod +x "$BOOT_PATH/Automation_Custom_Script.sh"
+sudo cp -f "$POSTBOOT_SCRIPT" "$BOOT_PATH/Automation_Custom_Script.sh"
+sudo chmod +x "$BOOT_PATH/Automation_Custom_Script.sh"
 [ ! -d "$MNT_PATH/var/lib/dietpi/dietpi-autostart" ] && sudo mkdir -p "$MNT_PATH/var/lib/dietpi/dietpi-autostart"
-cat >>"$MNT_PATH/var/lib/dietpi/dietpi-autostart/custom.sh" <<-EOF
-#!/usr/bin/env bash
-set -xeou pipefail
-XAUTHORITY=./Xauthority && export XAUTHORITY
-#startx /root/.build/startTE.sh |& tee /root/.build/log.txt 
-EOF
+printf "#!/usr/bin/env bash\nset -xeou pipefail\nXAUTHORITY=./Xauthority && export XAUTHORITY" |
+  sudo tee -a "$MNT_PATH/var/lib/dietpi/dietpi-autostart/custom.sh"
 
 echo ">> Unmounting DietPi image <<"
 cleanup
 
 echo ">> Compressing DietPi image <<"
-xz -z -6 -e -T0 "$IMAGE_NAME.img"
+sudo xz -z -6 -e -T0 "$IMAGE_NAME.img"
 
 echo ">> Generating build summary <<"
 ARCHIVE_PATH=$(find . -maxdepth 2 -type f -name "$IMAGE_NAME.img.xz" -print -quit)
