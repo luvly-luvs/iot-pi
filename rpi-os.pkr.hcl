@@ -32,16 +32,6 @@ build {
   name    = "base"
   sources = ["source.arm-image.pi"]
 
-  provisioner "file" {
-    source      = "./packages"
-    destination = "/tmp/packages"
-  }
-
-  provisioner "file" {
-    source      = "./packages_nr"
-    destination = "/tmp/packages_nr"
-  }
-
   provisioner "shell" {
     script = "./rpi-prerun.sh"
   }
