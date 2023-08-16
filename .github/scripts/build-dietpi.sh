@@ -16,7 +16,7 @@ function cleanup {
   sudo losetup -D
   sudo rm -rf "$MNT_PATH"
 }
-trap cleanup HUP INT QUIT ABRT ALRM TERM CHLD TSTP PWR EXIT
+trap cleanup EXIT
 
 echo ">> Building DietPi Image <<"
 echo ">> Downloading latest DietPi image <<"
