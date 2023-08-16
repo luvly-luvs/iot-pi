@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -xeou pipefail
 
-comp_type=${1:-zip}
-comp_level=${2:-6}
+comp_type=${1:-none}
+comp_level=${2:-0}
 img_key=${3:-iot-pi}
 
 sudo apt-get update -y
