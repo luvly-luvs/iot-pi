@@ -30,4 +30,4 @@ touch ./pi-gen/stage2/SKIP_NOOBS
 ln -s ./config ./pi-gen/config
 
 chmod +x ./pi-gen/build.sh
-./pi-gen/build.sh
+sudo ./pi-gen/build.sh

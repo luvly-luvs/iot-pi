@@ -20,4 +20,4 @@ jobs:
       - name: Build
         run: |
           sudo chmod +x ./.github/scripts/build-packer.sh
-          ./.github/scripts/build-packer.sh
+          sudo ./.github/scripts/build-packer.sh

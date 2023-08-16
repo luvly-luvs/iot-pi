@@ -5,6 +5,7 @@ base_img=${1:-"DietPi_RPi-ARMv8-Bookworm.7z"}
 
 sudo chmod +x ./*.sh
 
+sudo apt-get update -y
 sudo apt-get install qemu-user-static p7zip-full p7zip-rar -y -f
 wget -qO "https://dietpi.com/downloads/images/$base_img"
 7z e -o. -bt -y "$base_img"
@@ -23,4 +24,4 @@ EOF
   exit 1
 )
 
-packer build -var-file="rpi-os.pkrvars.hcl" .
+sudo packer build -var-file="rpi-os.pkrvars.hcl" .
