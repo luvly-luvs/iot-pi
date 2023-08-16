@@ -21,7 +21,7 @@ locals {
 
 source "arm-image" "pi" {
   iso_url              = var.source_iso_url
-  iso_checksum         = var.source_iso_checksum
+  iso_checksum         = "sha256:${var.source_iso_checksum}"
   iso_target_extension = "img"
   image_type           = "raspberrypi"
   output_filename      = local.image_name

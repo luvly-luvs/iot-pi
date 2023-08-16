@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 set -xeou pipefail
 
-base_img=${1:-"DietPi_RPi-ARMv8-Bookworm.7z"}
+base_img=${1:-"DietPi_RPi-ARMv8-Bookworm"}
 
 sudo chmod +x ./*.sh
 
 sudo apt-get update -y
 sudo apt-get install qemu-user-static p7zip-full p7zip-rar -y -f
-wget -q "https://dietpi.com/downloads/images/$base_img" -O "$base_img"
+wget -q "https://dietpi.com/downloads/images/$base_img.7z" -O "$base_img.7z"
 7z e -o. -bt -y "$base_img"
-IFS=" " read -ra sha_out <<<"$(shasum -a 256 "$base_img")"
+IFS=" " read -ra sha_out <<<"$(shasum -a 256 "$base_img.img")"
 
 cat >"./rpi-os.pkrvars.hcl" <<-EOF
 source_iso_url = "$base_img"
