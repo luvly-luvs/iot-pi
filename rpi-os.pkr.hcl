@@ -33,10 +33,10 @@ build {
   sources = ["source.arm-image.pi"]
 
   provisioner "shell" {
-    script = "./rpi-prerun.sh"
+    script = "./rpi-os-prerun.sh"
   }
 
   provisioner "shell" {
-    script = "./rpi-run.sh"
+    script = "./rpi-os-run.sh"
   }
 }
