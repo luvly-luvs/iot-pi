@@ -6,7 +6,7 @@ comp_level=${2:-6}
 img_key=${3:-iot-pi}
 
 sudo apt-get update -y
-xargs sudo apt-get install -f -y <depends
+xargs sudo apt-get install -f -y <../depends
 
 cat >config <<-EOF
 # -- pigen config --
@@ -20,14 +20,14 @@ KEYBOARD_KEYMAP="us"
 TIMEZONE_DEFAULT="America/Phoenix"
 FIRST_USER_NAME="pi"
 FIRST_USER_PASS="password"
+DISABLE_FIRST_BOOT_USER_RENAME=1
 ENABLE_SSH=1
-PUBKEY_SSH_FIRST_USER=0
 STAGE_LIST="stage0 stage1 stage2"
 # ------------------
 EOF
 
-touch ./pi-gen/stage2/SKIP_NOOBS
-ln -s ./config ./pi-gen/config
+touch ./stage2/SKIP_NOOBS
+ln -s ../config ./config
 
-chmod +x ./pi-gen/build.sh
-sudo ./pi-gen/build.sh
+chmod +x ./build.sh
+sudo ./build.sh

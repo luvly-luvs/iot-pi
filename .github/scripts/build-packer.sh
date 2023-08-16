@@ -11,9 +11,6 @@ wget -q "https://dietpi.com/downloads/images/$base_img" -O "$base_img"
 7z e -o. -bt -y "$base_img"
 IFS=" " read -ra sha_out <<<"$(shasum -a 256 "$base_img")"
 
-echo "iso_url=$base_img" >>"$GITHUB_OUTPUT"
-echo "iso_checksum=${sha_out[0]}" >>"$GITHUB_OUTPUT"
-
 cat >"./rpi-os.pkrvars.hcl" <<-EOF
 iso_url = "$base_img"
 iso_checksum = "${sha_out[0]}"
