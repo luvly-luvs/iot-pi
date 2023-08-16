@@ -7,7 +7,7 @@ sudo chmod +x ./*.sh
 
 sudo apt-get update -y
 sudo apt-get install qemu-user-static p7zip-full p7zip-rar -y -f
-wget -qO "https://dietpi.com/downloads/images/$base_img"
+wget -q "https://dietpi.com/downloads/images/$base_img" -O "$base_img"
 7z e -o. -bt -y "$base_img"
 IFS=" " read -ra sha_out <<<"$(shasum -a 256 "$base_img")"
 

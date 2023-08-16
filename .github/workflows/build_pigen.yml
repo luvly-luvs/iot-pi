@@ -35,6 +35,7 @@ jobs:
           ref: arm64
 
       - name: Set Build Configuration
+        working-directory: pi-gen
         run: |
-          sudo chmod +x ./.github/scripts/build-pigen.sh
-          sudo ./.github/scripts/build-pigen.sh
+          sudo chmod +x ../.github/scripts/build-pigen.sh
+          sudo ../.github/scripts/build-pigen.sh
