@@ -1,8 +1,5 @@
 on: [push, workflow_dispatch]
 name: Build Image with Packer
-concurrency:
-  group: packer
-  cancel-in-progress: true
 jobs:
   build:
     name: Build
