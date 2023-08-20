@@ -19,6 +19,13 @@ TIMEZONE_DEFAULT="America/Phoenix"
 STAGE_LIST="stage0 stage1"
 CONFIG
 
+cat <<EXPIMG >stage1/EXPORT_IMAGE
+IMG_SUFFIX=""
+if [ "${USE_QEMU}" = "1" ]; then
+	export IMG_SUFFIX="${IMG_SUFFIX}-qemu"
+fi
+EXPIMG
+
 chmod +x build.sh
 sudo ./build.sh
 
