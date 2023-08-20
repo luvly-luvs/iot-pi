@@ -26,6 +26,11 @@ if [ "\${USE_QEMU}" = "1" ]; then
 fi
 EXPIMG
 
+cat <<EXPNOOBS >stage1/EXPORT_NOOBS
+NOOBS_NAME="RPiOS (stage1-arm64)"
+NOOBS_DESCRIPTION="A port of Debian with no desktop environment"
+EXPNOOBS
+
 sudo chmod +x build.sh
 sudo ./build.sh
 
