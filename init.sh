@@ -4,9 +4,8 @@ set -eou pipefail
 git clone --branch arm64 https://github.com/RPI-Distro/pi-gen.git pi-gen
 
 pushd pi-gen || exit
-sed -i 's/^.*://' depends
 sudo apt-get update
-xargs sudo apt-get install -y -f <depends
+xargs sudo apt-get install -y -f <../depends
 
 cat <<CONFIG >config
 IMG_NAME="iot-pi"
