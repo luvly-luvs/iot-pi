@@ -12,3 +12,9 @@ jobs:
 
       - name: Build Stage 1 Image
         run: sudo chmod +x ./init.sh && sudo ./init.sh
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: image-build
+          path: pi-gen/deploy/*.zip
