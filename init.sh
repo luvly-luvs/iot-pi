@@ -26,7 +26,7 @@ if [ "${USE_QEMU}" = "1" ]; then
 fi
 EXPIMG
 
-chmod +x build.sh
+sudo chmod +x build.sh
 sudo ./build.sh
 
 ls -lh1 deploy
