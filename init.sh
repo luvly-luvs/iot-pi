@@ -21,8 +21,8 @@ CONFIG
 
 cat <<EXPIMG >stage1/EXPORT_IMAGE
 IMG_SUFFIX=""
-if [ "${USE_QEMU}" = "1" ]; then
-	export IMG_SUFFIX="${IMG_SUFFIX}-qemu"
+if [ "\${USE_QEMU}" = "1" ]; then
+	export IMG_SUFFIX="\${IMG_SUFFIX}-qemu"
 fi
 EXPIMG
 
