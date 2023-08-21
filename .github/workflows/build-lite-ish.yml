@@ -1,0 +1,25 @@
+on: workflow_dispatch
+name: Build Raspberry Pi OS Lite-ish
+jobs:
+  build:
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout Pi-Gen
+        uses: actions/checkout@v3
+        with:
+          ref: arm64
+          repository: RPi-Distro/pi-gen
+
+      - name: Build Stage 2
+        run: |
+          sudo chmod +x ./build-stage-2.sh
+          sudo -E ./build-stage-2.sh
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: image-build
+          path: deploy/*.zip
